@@ -1,15 +1,9 @@
-class booksController < ApplicationController
-    
+class BooksController < ApplicationController
+
   def index
-    @books = Book.all 
+    @books = Book.all
     json_response(@books)
   end
-
-  def search 
-    book_title = params[:book_title]
-    @books = Book.search(book_title)
-    json_response(@books)
-  end 
 
   def show
     @book = Book.find(params[:id])
@@ -17,22 +11,30 @@ class booksController < ApplicationController
   end
 
   def create
-    @book = Book.create(book_params)
-    json_response(@book)
+    @book = Book.create!(book_params)
+    json_response(@book, :created)
   end
 
   def update
     @book = Book.find(params[:id])
-    @book.update(book_params)
+    if @book.update!(book_params)
+      render status: 200, json: {
+        message: "This book has been updated successfully."
+      }
+    end
   end
 
   def destroy
     @book = Book.find(params[:id])
-    @book.destroy
+    if @book.destroy!(book_params)
+      render status: 200, json: {
+        message: "This book has been deleted successfully."
+      }
+    end
   end
 
   private
   def book_params
-    params.permit(:book_title, :book_author, :book_genre, :book_price)
+    params.permit(:title, :author, :genre, :price)
   end
 end
