@@ -6,7 +6,7 @@ Review.destroy_all
 end
 
 250.times do |index|
-  Review.create!(user_id: Faker::Name.name, book_id: 1+rand(50), content_body: Faker::Hipster.paragraph_by_chars(characters: 200, supplemental:false), rating: 1+rand(5))
+  Review.create!(user_id: Faker::Name.name, book_id: 1+rand(50), content_body: Faker::Hipster.paragraph_by_chars(characters: 50, supplemental:false), rating: 1+rand(5))
 end 
 
 
