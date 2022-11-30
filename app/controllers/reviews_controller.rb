@@ -2,9 +2,7 @@ class ReviewsController < ApplicationController
   before_action :authenticate_user!, :only => [:new]
   
   def index
-    @books = Book.all
-    @reviews = Review.all
-    json_response(@books)
+    @reviews = Review.find(params[:book_id])
     json_response(@reviews)
   end
 

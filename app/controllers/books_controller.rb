@@ -37,4 +37,7 @@ class BooksController < ApplicationController
   def book_params
     params.permit(:title, :author, :genre, :price)
   end
+  def json_response(object, status = 401)
+    render json: object, status: status
+  end
 end
