@@ -2,7 +2,7 @@ class BooksController < ApplicationController
 
   def index
     @books = Book.all
-    json_response(@books)
+    render :index 
   end
 
   def show
