@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
 
-  before_action :authenticate_user!, :except => [:index]
+  before_action :authenticate_user!, :except => [:index, :show]
 
   def index
     @books = Book.all
@@ -9,7 +9,7 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
-    json_response(@book)
+    render :show
   end
 
   def create

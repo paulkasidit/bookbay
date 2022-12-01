@@ -1,0 +1,12 @@
+<h1>Book: <%= @book.title %></h1>
+<h3>Author: $<%= @book.author %></h3>
+<h3>Genre: $<%= @book.genre %></h3>
+<h3>Price: <%= @book.price %></h3>
+
+<% if current_user %>
+<%= button_to "Add to cart", 
+              cart_item_path(book_id: @book.id) %>
+<% else %> 
+<%= button_to "Sign in to add to cart", 
+              cart_item_path(book_id: @book.id)%>
+<% end %>
