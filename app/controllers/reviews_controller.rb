@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-  before_action :authenticate_user!, :only => [:new]
+  before_action :authenticate_user!, :except => [:index]
   
   def index
     @reviews = Review.find(params[:book_id])
