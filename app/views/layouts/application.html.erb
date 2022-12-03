@@ -16,13 +16,16 @@
 
       <details> 
         <summary> Your Cart </summary>
-        <% @cart.each do |book| %>
-        <ul>
-          <li><%= book.title %></li>
-          <li><%= book.price %></li>
-        </ul>
+        <% if @cart.empty? %>
+          <p> You cart is empty!</p>
+        <% else %>
+          <ul>
+            <% @cart.each do |book| %>
+              <li><%= book.title %> / <%= book.price %><p><%= button_to  '- remove from cart', remove_from_cart_path(book), method: :delete%></p></li>
+            <% end %>
+          </ul>
+          <p> Total:</p>
         <% end %>
-        <p> Total:  <% Book.where(id: [id].sum(:price))%></p>
       </details>
 
       <%= button_to "Log out",
