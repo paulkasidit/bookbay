@@ -3,10 +3,8 @@
 <h3>Genre: $<%= @book.genre %></h3>
 <h3>Price: <%= @book.price %></h3>
 
-<% if current_user %>
-<%= button_to "Add to cart", 
-              cart_item_path(book_id: @book.id) %>
-<% else %> 
-<%= button_to "Sign in to add to cart", 
-              cart_item_path(book_id: @book.id)%>
+<% if @cart.include?(@book)%>
+  <p>Book is already in your cart!</p>
+<% else %>
+  <p><%= button_to  'add to cart', add_to_cart_path(@book.id), method: :post%></p>
 <% end %>

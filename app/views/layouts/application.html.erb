@@ -11,6 +11,23 @@
   </head>
 
   <body>
+  
+    <% if current_user %>
+      <%= button_to "Cart" %>
+    <% end %> 
+
+    <% if current_user %>
+      <%= button_to "Log out",
+      destroy_user_session_path(@user),
+      method: :delete %>
+    <% else %> 
+      <%= button_to "Sign in",
+      new_user_session_path,
+      method: :get  %>
+    <% end %>
+
     <%= yield %>
+
+    <p> You have visit this site <%= pluralize @visit_count, 'time'%></p> 
   </body>
 </html>
