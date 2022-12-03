@@ -9,6 +9,11 @@ class BooksController < ApplicationController
     render :index 
   end
 
+  def show_cart 
+    @cart = Book.find(session[:cart])
+    render :show
+  end
+  
   def add_to_cart 
     id = params[:id].to_i 
     session[:cart] << id unless session[:cart].include?(id)

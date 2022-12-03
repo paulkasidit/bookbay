@@ -11,19 +11,31 @@
   </head>
 
   <body>
-  
-    <% if current_user %>
-      <%= button_to "Cart" %>
-    <% end %> 
 
     <% if current_user %>
+
+      <details> 
+        <summary> Your Cart </summary>
+        <% @cart.each do |book| %>
+        <ul>
+          <li><%= book.title %></li>
+          <li><%= book.price %></li>
+        </ul>
+        <% end %>
+        <p> Total:  <% Book.where(id: [id].sum(:price))%></p>
+      </details>
+
       <%= button_to "Log out",
       destroy_user_session_path(@user),
       method: :delete %>
+
     <% else %> 
+
+      <p>Sign in to add items to your cart!</p>
       <%= button_to "Sign in",
       new_user_session_path,
       method: :get  %>
+
     <% end %>
 
     <%= yield %>

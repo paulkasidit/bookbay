@@ -4,7 +4,7 @@
 <h3>Price: <%= @book.price %></h3>
 
 <% if @cart.include?(@book)%>
-  <p>Book is already in your cart!</p>
+  <p>Book is in your cart.</p>
 <% else %>
   <p><%= button_to  'add to cart', add_to_cart_path(@book.id), method: :post%></p>
 <% end %>
