@@ -1,6 +1,5 @@
 class Book < ApplicationRecord
   has_many :reviews, dependent: :destroy
-  has_many :carts
   
   validates :title, presence: true
   validates :author, presence: true

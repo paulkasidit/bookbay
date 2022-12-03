@@ -23,14 +23,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_01_032912) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "carts", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "book_id"
-    t.integer "total_cost", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "reviews", force: :cascade do |t|
     t.integer "user_id"
     t.integer "book_id"
