@@ -21,13 +21,18 @@
         <% else %>
           <ul>
             <% @cart.each do |book| %>
-              <li><%= book.title %> / <%= book.price %><p><%= button_to  '- remove from cart', remove_from_cart_path(book), method: :delete%></p></li>
+              <li><%= book.title %> / <%= number_with_precision book.price, precision: 2 %><p><%= button_to  '- remove from cart', remove_from_cart_path(book), method: :delete%></p></li>
             <% end %>
           </ul>
-          <p> Total:</p>
+              <% total_price = []%>
+              <%@cart.each do |book| %>
+                <% total_price.push(book.price)%>
+               <% end %>
+               <p>Total: $<%= number_with_precision (total_price).sum, precision: 2%><p>
         <% end %>
+      <%= button_to "Check-out","#" %>
       </details>
-
+      <br>
       <%= button_to "Log out",
       destroy_user_session_path(@user),
       method: :delete %>
@@ -38,7 +43,6 @@
       <%= button_to "Sign in",
       new_user_session_path,
       method: :get  %>
-
     <% end %>
 
     <%= yield %>
