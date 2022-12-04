@@ -1,11 +1,34 @@
 <h1>Book: <%= @book.title %></h1>
 <h3>Author: $<%= @book.author %></h3>
 <h3>Genre: $<%= @book.genre %></h3>
-<h3>Price: <%= number_with_precision @book.price, precision: 2 %></h3>
+<h3>Price: <%= @book.price %></h3>
 
-<% if @cart.include?(@book)%>
-  <p>Book is in your cart.</p>
-   <p><%= button_to  'remove from cart', remove_from_cart_path(@book), method: :delete%></p>
+<% if current_user %>
+
+  <% if @cart.include?(@book)%>
+    <p>Book is in your cart.</p>
+    <p><%= button_to  'remove from cart', remove_from_cart_path(@book), method: :delete%></p>
+  <% else %>
+    <p><%= button_to  'add to cart', add_to_cart_path(@book.id), method: :post%></p>
+  <% end %>
+  
+  <% if @book.reviews.any? %>
+     <% @book.reviews.each do |review| %>
+      <ul>
+        <li>
+         <%= review.user_id %>
+        |
+        Review: <%= review.content_body%>
+        | 
+        Rating: <%= review.rating %> 
+        </li>
+      </ul>
+    <% end %>
+  <% else %>
+    <p>There are no reviews listed for this product.</p>
+  <% end %>
+  
+
 <% else %>
-  <p><%= button_to  'add to cart', add_to_cart_path(@book.id), method: :post%></p>
+  <p>Sign in to leave a review or add this item to your cart.</p>
 <% end %>

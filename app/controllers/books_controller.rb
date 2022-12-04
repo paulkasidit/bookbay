@@ -5,30 +5,22 @@ class BooksController < ApplicationController
   before_action :authenticate_user!, :except => [:index, :show]
 
   def index
-    @books = Book.all
+    @book = Book.all
     render :index 
   end
-  
-  def add_to_cart 
-    id = params[:id].to_i 
-    session[:cart] << id unless session[:cart].include?(id)
-    redirect_to root_path
-  end 
 
-  def remove_from_cart 
-    id = params[:id].to_i 
-    session[:cart].delete(id)
-    redirect_to root_path
+  def new 
+    @book = Book.new 
+  end
+  
+  def create
+    @book.user_id  = current_user.id
+    @book = Book.new(book_params)
   end
 
   def show
     @book = Book.find(params[:id])
     render :show
-  end
-
-  def create
-    @book = Book.create!(book_params)
-    json_response(@book, :created)
   end
 
   def update
@@ -49,6 +41,23 @@ class BooksController < ApplicationController
     end
   end
 
+  def add_to_cart 
+    id = params[:id].to_i 
+    session[:cart] << id unless session[:cart].include?(id)
+    redirect_to root_path
+  end 
+
+  def remove_from_cart 
+    id = params[:id].to_i 
+    session[:cart].delete(id)
+    redirect_to root_path
+  end
+
+  def sell 
+    @book = Book.find(params[current_user.id])
+    render :sell 
+  end 
+  
   private
 
   def intialize_session 

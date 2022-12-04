@@ -16,22 +16,32 @@
 
       <details> 
         <summary> Your Cart </summary>
+         <p>------------------------------------------------------------------</p>
         <% if @cart.empty? %>
           <p> You cart is empty!</p>
         <% else %>
           <ul>
             <% @cart.each do |book| %>
-              <li><%= book.title %> / <%= number_with_precision book.price, precision: 2 %><p><%= button_to  '- remove from cart', remove_from_cart_path(book), method: :delete%></p></li>
+              <li><%= book.title %> / $<%= number_with_precision book.price, precision: 2 %><p><%= button_to  '- remove from cart', remove_from_cart_path(book), method: :delete%></p></li>
             <% end %>
           </ul>
+         <p>------------------------------------------------------------------</p>
               <% total_price = []%>
               <%@cart.each do |book| %>
                 <% total_price.push(book.price)%>
                <% end %>
-               <p>Total: $<%= number_with_precision (total_price).sum, precision: 2%><p>
+               <p>Subtotal: $<%= number_with_precision (total_price).sum, precision: 2%><p>
+               <p>-----------</p>
+               <p>+ CA Sales Tax: $<%= number_with_precision (total_price).sum * 1.0875 - (total_price).sum, precision: 2%><p>
+               <p>-----------</p>
+               <p>Final Total: $<%= number_with_precision (total_price).sum * 1.0875, precision: 2%><p>
         <% end %>
       <%= button_to "Check-out","#" %>
+      <p>------------------------------------------------------------------</p>
       </details>
+      <br>
+      <%= link_to "Sell",
+      "#" %>
       <br>
       <%= button_to "Log out",
       destroy_user_session_path(@user),
@@ -39,14 +49,15 @@
 
     <% else %> 
 
-      <p>Sign in to add items to your cart!</p>
+      <p>Sign in to add items to your cart or leave reviews!</p>
       <%= button_to "Sign in",
       new_user_session_path,
       method: :get  %>
+
     <% end %>
 
     <%= yield %>
 
-    <p> You have visit this site <%= pluralize @visit_count, 'time'%></p> 
+    <p> You have visited this site <%= pluralize @visit_count, 'time'%></p> 
   </body>
 </html>
