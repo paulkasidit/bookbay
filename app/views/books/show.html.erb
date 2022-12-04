@@ -1,0 +1,11 @@
+<h1>Book: <%= @book.title %></h1>
+<h3>Author: $<%= @book.author %></h3>
+<h3>Genre: $<%= @book.genre %></h3>
+<h3>Price: <%= @book.price %></h3>
+
+<% if @cart.include?(@book)%>
+  <p>Book is in your cart.</p>
+   <p><%= button_to  'remove from cart', remove_from_cart_path(@book), method: :delete%></p>
+<% else %>
+  <p><%= button_to  'add to cart', add_to_cart_path(@book.id), method: :post%></p>
+<% end %>

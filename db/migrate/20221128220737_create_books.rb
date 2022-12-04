@@ -4,7 +4,7 @@ class CreateBooks < ActiveRecord::Migration[7.0]
       t.column(:title, :string)
       t.column(:author, :string)
       t.column(:genre, :string)
-      t.column(:price, :decimal)
+      t.column(:price, :integer)
 
       t.timestamps
     end

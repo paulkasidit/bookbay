@@ -1,0 +1,12 @@
+<h1>BookBay</h1>
+
+<h3>List of Books</h3>
+<% if @books.any? %>
+  <ul>
+    <% @books.each do |book| %>
+      <li><%= link_to book.title, book_path(book) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>There are no books yet.</p>
+<% end %>
