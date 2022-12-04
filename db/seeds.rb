@@ -11,9 +11,9 @@ class Seed
   end 
 
   def generate_dummy_users 
-    user1 = User.create!(email: "lala89@beverly.com", password: "adminadmin", password_confirmation: "adminadmin",username: "lala89")
-    user2 = User.create!(email: "adminadmin@admin.com", password: "adminadmin", password_confirmation: "adminadmin",username: "star69")
-    user3 = User.create!(email: "pk56@pasorobleswinery.com", password: "adminadmin", password_confirmation: "adminadmin",username: "pk56")
+    user1 = User.create!(email: "lala89@beverly.com", password: "adminadmin", password_confirmation: "adminadmin",username: "lala89", wallet_balance: 102.95)
+    user2 = User.create!(email: "adminadmin@admin.com", password: "adminadmin", password_confirmation: "adminadmin",username: "star69", wallet_balance: 63.98 )
+    user3 = User.create!(email: "pk56@pasorobleswinery.com", password: "adminadmin", password_confirmation: "adminadmin",username: "pk56",  wallet_balance: 71.12 )
     puts "Dummy accounts successfuly created, email: #{user1.email}, username #{user1.username} password: #{user1.password}."
     puts "Dummy accounts successfuly created, email: #{user2.email}, username #{user2.username} password: #{user2.password}."
     puts "Dummy accounts successfuly created, email: #{user3.email}, username #{user3.username} password: #{user3.password}."
