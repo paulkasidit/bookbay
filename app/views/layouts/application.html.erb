@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <title>TeamweekNov2022Bookbay</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -40,8 +41,9 @@
       <p>------------------------------------------------------------------</p>
       </details>
       <br>
-      <%= link_to "Sell",
-      "#" %>
+      <%= button_to "Sell", 
+              new_book_path,
+              method: :get %>
       <br>
       <%= button_to "Log out",
       destroy_user_session_path(@user),

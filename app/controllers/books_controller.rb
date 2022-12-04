@@ -15,12 +15,20 @@ class BooksController < ApplicationController
   end
 
   def new 
-    @book = Book.new 
+    @book = Book.new
+    render :sell
   end
   
   def create
-    @book.user_id  = current_user.id
     @book = Book.new(book_params)
+    @book.user_id = current_user.id
+    if @book.save
+      flash[:notice] = "Product successfully added!"
+      redirect_to books_path
+    else
+      render :sell, status: :unprocessable_entity
+    end
+
   end
 
   def show
@@ -62,7 +70,6 @@ class BooksController < ApplicationController
 
   def sell 
     @book = Book.find(params[:user_id])
-    render :sell 
   end 
   
   private
@@ -82,7 +89,7 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.permit(:title, :author, :genre, :price, :user_id)
+    params.require(:book).permit(:title, :author, :genre, :price, :user_id)
   end
 
   def json_response(object, status = 401)
