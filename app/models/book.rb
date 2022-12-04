@@ -6,12 +6,13 @@ class Book < ApplicationRecord
   validates :author, presence: true
   validates :genre, presence: true
   validates :price, presence: true 
+  validates :user_id, presence: true
 
   before_save(:titleize_book)
 
-  scope :books_by_user, lambda {|user|
-    where(:user_id => user.id)
-  }
+  def self.books_by_user(user) 
+    where(:user_id => user)
+  end
 
   private
     def titleize_book

@@ -5,9 +5,13 @@ class BooksController < ApplicationController
   before_action :authenticate_user!, :except => [:index, :show]
 
   def index
-    @book = Book.all
-    @books_by_user = Book.books_by_user(current_user).find(params[:user_id])
-    render :index 
+    if current_user
+      @books_by_user = Book.books_by_user(current_user.id)
+      @book = Book.all
+      render :index
+    else 
+      @book = Book.all
+    end
   end
 
   def new 
@@ -55,7 +59,7 @@ class BooksController < ApplicationController
   end
 
   def sell 
-    @book = Book.find(params[current_user.id])
+    @book = Book.find(params[:user_id])
     render :sell 
   end 
   
@@ -76,7 +80,7 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.permit(:id, :title, :author, :genre, :price, :user_id)
+    params.permit(:title, :author, :genre, :price, :user_id)
   end
 
   def json_response(object, status = 401)
