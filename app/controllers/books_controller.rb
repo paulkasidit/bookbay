@@ -6,6 +6,7 @@ class BooksController < ApplicationController
 
   def index
     @book = Book.all
+    @books_by_user = Book.books_by_user(current_user).find(params[:user_id])
     render :index 
   end
 
@@ -75,7 +76,7 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.permit(:title, :author, :genre, :price)
+    params.permit(:id, :title, :author, :genre, :price, :user_id)
   end
 
   def json_response(object, status = 401)

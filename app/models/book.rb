@@ -9,6 +9,10 @@ class Book < ApplicationRecord
 
   before_save(:titleize_book)
 
+  scope :books_by_user, lambda {|user|
+    where(:user_id => user.id)
+  }
+
   private
     def titleize_book
       self.title = self.title.titleize
