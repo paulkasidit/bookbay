@@ -68,8 +68,22 @@ class BooksController < ApplicationController
     redirect_to root_path
   end
 
-  def sell 
-    @book = Book.find(params[:user_id])
+  def checkout_cart 
+    for i in session[:cart] 
+      while session[:cart].length > 0
+        book = Book.find(i)
+        book_user_id = book.user_id 
+        user = User.find(book_user_id)
+        
+        new_balance = user.wallet_balance += book.price 
+
+        user.update({:wallet_balance => new_balance})
+        book.update({:sold => true})  
+        session[:cart].pop(i)
+      end
+    end 
+    session[:cart].clear
+    redirect_to root_path
   end 
   
   private

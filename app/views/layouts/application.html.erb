@@ -40,7 +40,7 @@
                <p>-----------</p>
                <p>Final Total: $<%= number_with_precision (total_price).sum * 1.0875, precision: 2%><p>
         <% end %>
-      <%= button_to "Check-out","#" %>
+      <p><%= button_to  'checkout', checkout_cart_path, method: :post%></p>
       <p>------------------------------------------------------------------</p>
       </details>
       <br>
