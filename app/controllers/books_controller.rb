@@ -5,30 +5,37 @@ class BooksController < ApplicationController
   before_action :authenticate_user!, :except => [:index, :show]
 
   def index
-    @books = Book.all
-    render :index 
+    if current_user
+      @books_by_user = Book.books_by_user(current_user.id)
+      @book = Book.all
+      render :index
+    else 
+      @book = Book.all
+    end
+  end
+
+  def new 
+    @book = Book.new
+    render :sell
   end
   
-  def add_to_cart 
-    id = params[:id].to_i 
-    session[:cart] << id unless session[:cart].include?(id)
-    redirect_to root_path
-  end 
+  def create
+    @book = Book.new(book_params)
+    @book.user_id = current_user.id
+    if @book.save
+      flash[:notice] = "Product successfully added!"
+      redirect_to books_path
+    else
+      render :sell, status: :unprocessable_entity
+    end
 
-  def remove_from_cart 
-    id = params[:id].to_i 
-    session[:cart].delete(id)
-    redirect_to root_path
   end
 
   def show
     @book = Book.find(params[:id])
+    user = User.find(@book.user_id)
+    @user_username = user.username
     render :show
-  end
-
-  def create
-    @book = Book.create!(book_params)
-    json_response(@book, :created)
   end
 
   def update
@@ -49,6 +56,36 @@ class BooksController < ApplicationController
     end
   end
 
+  def add_to_cart 
+    id = params[:id].to_i 
+    session[:cart] << id unless session[:cart].include?(id)
+    redirect_to root_path
+  end 
+
+  def remove_from_cart 
+    id = params[:id].to_i 
+    session[:cart].delete(id)
+    redirect_to root_path
+  end
+
+  def checkout_cart 
+    for i in session[:cart] 
+      while session[:cart].length > 0
+        book = Book.find(i)
+        book_user_id = book.user_id 
+        user = User.find(book_user_id)
+        
+        new_balance = user.wallet_balance += book.price 
+
+        user.update({:wallet_balance => new_balance})
+        book.update({:sold => true})  
+        session[:cart].pop(i)
+      end
+    end 
+    session[:cart].clear
+    redirect_to root_path
+  end 
+  
   private
 
   def intialize_session 
@@ -66,7 +103,7 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.permit(:title, :author, :genre, :price)
+    params.require(:book).permit(:title, :author, :genre, :price, :user_id)
   end
 
   def json_response(object, status = 401)

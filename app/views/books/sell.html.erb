@@ -1,0 +1,23 @@
+<h1>New Product</h1>
+
+<%= form_for @book do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+  <%= f.label :author %>
+  <%= f.text_field :author %>
+  <%= f.label :genre %>
+  <%= f.text_field :genre %>
+  <%= f.label :price %>
+  <%= f.text_field :price %>
+  <%= f.submit  %>
+<% end %>
+
+<% if @book.errors.any? %>
+  <h3>Please fix these errors:</h3>
+  <ul>
+    <% @book.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+  
+<% end %>
