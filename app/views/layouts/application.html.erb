@@ -15,6 +15,10 @@
 
   <body>
 
+    <p> <%= button_to "home", 
+         root_path, 
+         method: :get%> </p>
+
     <% if current_user %>
 
       <h3>Welcome, <%= current_user.username %> !</h3>
