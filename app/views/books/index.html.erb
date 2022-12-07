@@ -2,7 +2,7 @@
 
   <% if current_user%>
 
-    <h3>Books by You</h3>
+    <h3>Your Books</h3>
 
     <% if @books_by_user.any? %>
       <ul>
@@ -14,7 +14,7 @@
 
   <%end%>
 
-  <h3>List of Books</h3>
+  <h3>Books</h3>
   <% if @book.any? %>
     <ul>
       <% @book.each do |book| %>
