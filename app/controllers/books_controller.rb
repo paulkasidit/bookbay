@@ -81,7 +81,7 @@ class BooksController < ApplicationController
       end
     end 
     session[:cart].clear
-    redirect_to root_path
+    redirect_to :complete_order_page
   end 
   
   private

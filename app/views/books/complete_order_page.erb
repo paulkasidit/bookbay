@@ -1,0 +1,27 @@
+<% if current_user %> 
+
+  <h1> Thanks for shopping at BookBay,<% current_user.username %>  
+
+  <h3> Your order summary <h3> 
+
+  <ul>
+    <% @cart.each do |book| %>
+      <li><%= book.title %> / $<%= number_with_precision book.price, precision: 2 %></li>
+    <% end %>
+  </ul>
+
+   <% total_price = []%>
+              <%@cart.each do |book| %>
+                <% total_price.push(book.price)%>
+   <% end %>
+  <p>Subtotal: $<%= number_with_precision (total_price).sum, precision: 2%><p>
+  <p>-----------</p>
+  <p>+ CA Sales Tax: $<%= number_with_precision (total_price).sum * 1.0875 - (total_price).sum, precision: 2%><p>
+  <p>-----------</p>
+  <p>Final Total: $<%= number_with_precision (total_price).sum * 1.0875, precision: 2%><p>
+
+  <p>$<%= number_with_precision (total_price).sum * 1.0875, precision: 2%> was charged to your card.</p>
+
+<% else %> 
+  <p>How did you get here? You did not buy anything yet!</p>
+<% end %>
