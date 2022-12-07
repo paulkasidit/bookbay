@@ -49,11 +49,9 @@ class BooksController < ApplicationController
 
   def destroy
     @book = Book.find(params[:id])
-    if @book.destroy!(book_params)
-      render status: 200, json: {
-        message: "This book has been deleted successfully."
-      }
-    end
+    @book.destroy
+    flash[:notice] = "Book has been deleted."
+    redirect_to root_path
   end
 
   def add_to_cart 
