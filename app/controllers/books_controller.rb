@@ -66,23 +66,52 @@ class BooksController < ApplicationController
     redirect_to root_path
   end
 
-  def checkout_cart 
-    for i in session[:cart] 
-      while session[:cart].length > 0
-        book = Book.find(i)
-        book_user_id = book.user_id 
-        user = User.find(book_user_id)
-        
-        new_balance = user.wallet_balance += book.price 
+  def total_cart(arr) 
+    processing_array = []
+    for i in arr
+        while arr.length > 0  
+          processing_array.push(i) 
+        end
+    end
+    return processing_array.sum * 1.0875
+  end
 
-        user.update({:wallet_balance => new_balance})
-        book.update({:sold => true})  
-        session[:cart].pop(i)
+  def checkout_cart 
+
+    for i in session[:cart] 
+      book = Book.find(i) 
+      total_array = []
+      total_array.push(book.price) 
+      buying_user_id = current_user.id  
+      buying_user = User.find(buying_user_id) 
+
+      if buying_user.wallet_balance < self.total_cart(total_array)  
+        flash[:alert] == "You have insufficient funds to make this purchase." 
+
+      else
+        while session[:cart].length > 0
+          book_user_id = book.user_id 
+          selling_user = User.find(book_user_id)
+
+          deducted_new_balance = buying_user.wallet_balance -= book.price 
+          credited_new_balance = selling_user.wallet_balance +=  book.price 
+
+          buying_user.update({:wallet_balance => deducted_new_balance})
+          selling_user.update({:wallet_balance => credited_new_balance})
+          
+          book.update({:sold => true})  
+          book.update({:user_id => buying_user.id})
+          session[:cart].pop(i)
+          end
       end
-    end 
+    end
+
     session[:cart].clear
     redirect_to root_path
-  end 
+
+  end
+
+
   
   private
 
