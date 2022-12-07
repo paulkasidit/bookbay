@@ -71,6 +71,7 @@ class BooksController < ApplicationController
     for i in arr
         while arr.length > 0  
           processing_array.push(i) 
+          arr.pop(i)
         end
     end
     return processing_array.sum * 1.0875
@@ -86,8 +87,8 @@ class BooksController < ApplicationController
       buying_user = User.find(buying_user_id) 
 
       if buying_user.wallet_balance < self.total_cart(total_array)  
-        flash[:alert] == "You have insufficient funds to make this purchase." 
-
+        session[:cart].clear
+        flash[:notice] = "You have insufficient funds to make this purchase." 
       else
         while session[:cart].length > 0
           book_user_id = book.user_id 
@@ -104,10 +105,8 @@ class BooksController < ApplicationController
           session[:cart].pop(i)
           end
       end
+      redirect_to root_path
     end
-
-    session[:cart].clear
-    redirect_to root_path
 
   end
 

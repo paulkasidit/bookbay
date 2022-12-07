@@ -1,7 +1,7 @@
 <h1>Book: <%= @book.title %></h1>
-<h3>Author: $<%= @book.author %></h3>
-<h3>Genre: $<%= @book.genre %></h3>
-<h3>Price: <%= @book.price %></h3>
+<h3>Author: <%= @book.author %></h3>
+<h3>Genre: <%= @book.genre %></h3>
+<h3>Price: $<%= number_with_precision @book.price, precision: 2 %></h3>
 <% if current_user %>
 
   <% if @user_username == current_user.username %>

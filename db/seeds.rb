@@ -21,7 +21,7 @@ class Seed
 
   def generate_books 
     50.times do |index|
-      Book.create!(title: Faker::Book.title, author: Faker::Book.author, genre: Faker::Book.genre, price: 19.99, user_id: (User.ids).sample) 
+      Book.create!(title: Faker::Book.title, author: Faker::Book.author, genre: Faker::Book.genre, price: rand(11.25...77.88), user_id: (User.ids).sample) 
       p "Created #{Book.count} books"
     end
   end

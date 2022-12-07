@@ -67,6 +67,9 @@
 
     <% end %>
 
+    <%= flash[:alert] %>
+    <%= flash[:notice] %>
+
     <%= yield %>
 
     <p> You have visited this site <%= pluralize @visit_count, 'time'%></p> 
