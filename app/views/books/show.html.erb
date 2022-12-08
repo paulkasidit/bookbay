@@ -5,9 +5,9 @@
 <% if current_user %>
 
   <% if @user_username == current_user.username %>
-    <p>Listed by: You </p>
+    <p>Listed: You </p>
   <% else %>
-    <p>Listed by: <%= @user_username %></p>
+    <p>Listed: <%= @user_username %></p>
   <% end %>
 
   <% if @cart.include?(@book)%>
