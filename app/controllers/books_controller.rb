@@ -86,7 +86,7 @@ class BooksController < ApplicationController
       buying_user_id = current_user.id  
       buying_user = User.find(buying_user_id) 
 
-      if buying_user.wallet_balance < self.total_cart(total_array)  
+      if buying_user.wallet_balance < total_cart(total_array)  
         session[:cart].clear
         flash[:notice] = "You have insufficient funds to make this purchase." 
       else
