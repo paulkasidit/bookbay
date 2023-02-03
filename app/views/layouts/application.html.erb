@@ -2,22 +2,28 @@
 <html>
 
   <head>
-    <title>TeamweekNov2022Bookbay</title>
+    <title>Bookbay</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
+    <%# <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
-    
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css"> %>
+
   </head>
 
   <body>
-
-    <p> <%= button_to "home", 
+    <div class = "columns">
+      <div class = "column">
+        <h1>BookBay</h1>
+      </div>
+      <div class = "column">
+         <p> <%= button_to "home", 
          root_path, 
          method: :get%> </p>
+      </div>
+    </div>
 
     <% if current_user %>
 
@@ -30,11 +36,13 @@
         <% if @cart.empty? %>
           <p> You cart is empty!</p>
         <% else %>
-          <ul>
-            <% @cart.each do |book| %>
-              <li><%= book.title %> / $<%= number_with_precision book.price, precision: 2 %><p><%= button_to  '- remove from cart', remove_from_cart_path(book), method: :delete%></p></li>
-            <% end %>
-          </ul>
+          <div class = "box">
+            <ul>
+              <% @cart.each do |book| %>
+                <li><%= book.title %> / $<%= number_with_precision book.price, precision: 2 %><p><%= button_to  '- remove from cart', remove_from_cart_path(book), method: :delete%></p></li>
+              <% end %>
+            </ul>
+          </div>
          <p>------------------------------------------------------------------</p>
               <% total_price = []%>
               <%@cart.each do |book| %>

@@ -1,4 +1,4 @@
- <h1>BookBay</h1>
+
 
   <% if current_user%>
 
@@ -18,7 +18,9 @@
   <% if @book.any? %>
     <ul>
       <% @book.each do |book| %>
+        <div class = "box">
         <li><%= link_to book.title, book_path(book) %></li>
+        </div>
       <% end %>
     </ul>
   <% else %>
