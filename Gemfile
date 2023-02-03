@@ -66,5 +66,5 @@ group :development do
 end
 
 gem 'devise'
-
+gem "bulma-rails", "~> 0.8.0"
 
