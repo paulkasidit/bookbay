@@ -1,29 +1,30 @@
-
-
-  <% if current_user%>
-
-    <h3>Your Books</h3>
-
-    <% if @books_by_user.any? %>
-      <ul>
-        <% @books_by_user.each do |book| %>
-          <li><%= link_to book.title, book_path(book) %></li>
-        <% end %>
-      </ul>
-    <%end%>
-
-  <%end%>
-
-  <h3>Books</h3>
-  <% if @book.any? %>
-    <ul>
-      <% @book.each do |book| %>
+  <section class = "section">
+    <div class = "columns">
+      <div class = "column is-one-quarter">
+        <% if current_user%>
+          <h3 class = "subtitle">Your Books</h3>
+          <% if @books_by_user.any? %>
+            <ul>
+              <% @books_by_user.each do |book| %>
+                <li><%= link_to book.title, book_path(book) %></li>
+              <% end %>
+            </ul>
+          <%end%>
+        <%end%>
+      </div>
+      <div class = "column">
         <div class = "box">
-        <li><%= link_to book.title, book_path(book) %></li>
+          <h3 class = "subtitle">Books</h3>
+          <% if @book.any? %>
+            <ul>
+              <% @book.each do |book| %>
+                <li><%= link_to book.title, book_path(book) %></li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p>There are no books yet.</p>
+          <% end %>
         </div>
-      <% end %>
-    </ul>
-  <% else %>
-    <p>There are no books yet.</p>
-  <% end %>
-
+      </div>
+    </div>
+</section>

@@ -9,72 +9,71 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css"> %>
-
   </head>
 
   <body>
-    <div class = "columns">
-      <div class = "column">
-        <h1>BookBay</h1>
-      </div>
-      <div class = "column">
-         <p> <%= button_to "home", 
-         root_path, 
-         method: :get%> </p>
-      </div>
-    </div>
-
-    <% if current_user %>
-
-      <h3>Welcome, <%= current_user.username %> !</h3>
-      <h3>Wallet: $<%= number_with_precision current_user.wallet_balance, precision: 2  %> </h3>
-
-      <details> 
-        <summary> Your Cart </summary>
-         <p>------------------------------------------------------------------</p>
-        <% if @cart.empty? %>
-          <p> You cart is empty!</p>
-        <% else %>
-          <div class = "box">
-            <ul>
-              <% @cart.each do |book| %>
-                <li><%= book.title %> / $<%= number_with_precision book.price, precision: 2 %><p><%= button_to  '- remove from cart', remove_from_cart_path(book), method: :delete%></p></li>
-              <% end %>
-            </ul>
+  <section class = "hero is-primary">
+    <div class = "hero-body">
+        <div class = "columns is-gapless">
+          <div class = "column is-one-fifth">
+            <p class = "title">
+              <h1 class = "title">BookBay</h1>
+            </p>
           </div>
-         <p>------------------------------------------------------------------</p>
-              <% total_price = []%>
-              <%@cart.each do |book| %>
-                <% total_price.push(book.price)%>
-               <% end %>
-               <p>Subtotal: $<%= number_with_precision (total_price).sum, precision: 2%><p>
-               <p>-----------</p>
-               <p>+ CA Sales Tax: $<%= number_with_precision (total_price).sum * 1.0875 - (total_price).sum, precision: 2%><p>
-               <p>-----------</p>
-               <p>Final Total: $<%= number_with_precision (total_price).sum * 1.0875, precision: 2%><p>
-        <% end %>
-      <p><%= button_to  'checkout', checkout_cart_path, method: :post%></p>
-      <p>------------------------------------------------------------------</p>
-      </details>
-      <br>
-      <%= button_to "Sell", 
-              new_book_path,
-              method: :get %>
-      <br>
-      <%= button_to "Log out",
-      destroy_user_session_path(@user),
-      method: :delete %>
-
-    <% else %> 
-
-      <p>Sign in to add items to your cart or leave reviews!</p>
-      <%= button_to "Sign in",
-      new_user_session_path,
-      method: :get  %>
-
-    <% end %>
-
+          <div class = "column is-one-fifth">
+              <%= button_to "home",
+              root_path, 
+              method: :get%> 
+          </div>
+          <div class = "column is-two-thirds">
+                <% if current_user %>
+                  <h3>Welcome, <%= current_user.username %> !</h3>
+                  <h3>Wallet: $<%= number_with_precision current_user.wallet_balance, precision: 2  %> </h3>
+                  <details> 
+                    <summary> Your Cart </summary>
+                    <p>------------------------------------------------------------------</p>
+                    <% if @cart.empty? %>
+                      <p> You cart is empty!</p>
+                    <% else %>
+                      <div class = "box">
+                        <ul>
+                          <% @cart.each do |book| %>
+                            <li><%= book.title %> / $<%= number_with_precision book.price, precision: 2 %><p><%= button_to  '- remove from cart', remove_from_cart_path(book), method: :delete%></p></li>
+                          <% end %>
+                        </ul>
+                      </div>
+                    <p>------------------------------------------------------------------</p>
+                          <% total_price = []%>
+                          <%@cart.each do |book| %>
+                            <% total_price.push(book.price)%>
+                          <% end %>
+                          <p>Subtotal: $<%= number_with_precision (total_price).sum, precision: 2%><p>
+                          <p>-----------</p>
+                          <p>+ CA Sales Tax: $<%= number_with_precision (total_price).sum * 1.0875 - (total_price).sum, precision: 2%><p>
+                          <p>-----------</p>
+                          <p>Final Total: $<%= number_with_precision (total_price).sum * 1.0875, precision: 2%><p>
+                    <% end %>
+                  <p><%= button_to  'checkout', checkout_cart_path, method: :post%></p>
+                  <p>------------------------------------------------------------------</p>
+                  </details>
+                  <br>
+                  <%= button_to "Sell", 
+                          new_book_path,
+                          method: :get %>
+                  <br>
+                  <%= button_to "Log out",
+                  destroy_user_session_path(@user),
+                  method: :delete %>
+                <% else %> 
+                  <p>Sign in to add items to your cart or leave reviews!</p>
+                  <%= button_to "Sign in",
+                  new_user_session_path,
+                  method: :get  %>
+                <% end %>
+          </div>
+        </div>
+      </div>
+    </section>
     <%= flash[:alert] %>
     <%= flash[:notice] %>
 
