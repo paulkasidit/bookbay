@@ -21,14 +21,18 @@
             </p>
           </div>
           <div class = "column is-one-fifth">
-              <%= button_to "home",
+              <%= button_to "Home",
               root_path, 
               method: :get%> 
           </div>
-          <div class = "column is-two-thirds">
+          <div class = "column ">
                 <% if current_user %>
                   <h3>Welcome, <%= current_user.username %> !</h3>
-                  <h3>Wallet: $<%= number_with_precision current_user.wallet_balance, precision: 2  %> </h3>
+          </div>
+          <div class = "column">
+                  <h3>Wallet Balance: $<%= number_with_precision current_user.wallet_balance, precision: 2  %> </h3>
+          </div>
+          <div class = "column">
                   <details> 
                     <summary> Your Cart </summary>
                     <p>------------------------------------------------------------------</p>
@@ -56,20 +60,25 @@
                   <p><%= button_to  'checkout', checkout_cart_path, method: :post%></p>
                   <p>------------------------------------------------------------------</p>
                   </details>
-                  <br>
+        <div class = "column">
                   <%= button_to "Sell", 
                           new_book_path,
                           method: :get %>
-                  <br>
+        </div>
+        <div class = "column">
                   <%= button_to "Log out",
                   destroy_user_session_path(@user),
                   method: :delete %>
+        </div>
+        <div class = "columns">
                 <% else %> 
                   <p>Sign in to add items to your cart or leave reviews!</p>
                   <%= button_to "Sign in",
                   new_user_session_path,
                   method: :get  %>
                 <% end %>
+        </div>
+            </div>
           </div>
         </div>
       </div>
@@ -81,4 +90,13 @@
 
     <p> You have visited this site <%= pluralize @visit_count, 'time'%></p> 
   </body>
+  <footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      <strong>Bulma</strong> by <a href="https://jgthms.com">Paul Srisawat</a>. The source code is licensed
+      <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+      is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+    </p>
+  </div>
+</footer>
 </html>
