@@ -17,7 +17,6 @@
       <div class = "column">
         <div class = "box">
           <h3 class = "subtitle">Books</h3>
-
           <% if @book.any? %>
               <% @book.each do |book|%>
                 <% if book.user_id != current_user.id%>
@@ -27,7 +26,6 @@
           <% else %>
             <p>There are no books yet.</p>
           <% end %>
-
         </div>
       </div>
       <div class = "column">
