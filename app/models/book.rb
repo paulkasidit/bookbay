@@ -14,6 +14,10 @@ class Book < ApplicationRecord
     where(:user_id => user)
   end
 
+  def self.books_not_by_user(user)
+    where(:user_id != user)
+  end
+
   private
     def titleize_book
       self.title = self.title.titleize
