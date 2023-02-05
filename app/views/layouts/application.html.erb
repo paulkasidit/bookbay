@@ -8,37 +8,27 @@
     <section class="hero is-primary">
       <div class="hero-body">
         <div class="columns">
-          <div class="column is-one-fifth">
-            <p class="title is-1">BookBay</p>
+          <div class="column is-half">
+            <h1 class="title is-1">BookBay</h1>
           </div>
             <% if current_user %> 
-            <div class="column is-one-fifth">
-              <%= button_to "Home",
-              root_path, 
-              method: :get%> 
+            <div class = "column">
+              <nav class="breadcrumb" aria-label="breadcrumbs">
+                <ul>
+                  <li><p>Welcome, <%= current_user.username %> !</p></li>
+                  <li><p>Wallet Balance: $<%= number_with_precision current_user.wallet_balance, precision: 2  %></p></li>
+                  <li><%= link_to "Sell",new_book_path, method: :get %> 
+                  </li>
+                  <li><%= button_to "Log out",destroy_user_session_path(@user),method: :delete %></li>
+                </ul>
+              </nav>
             </div>
-            <div class="columns">
-              <div class="column ">
-                <h3>Welcome, <%= current_user.username %> ! </h3>
-              </div>
-              <div class="column">
-                <h3>Wallet Balance: $<%= number_with_precision current_user.wallet_balance, precision: 2  %> </h3>
-              </div>
-            </div>
-            <div class="columns">
-              <div class="column"><%= button_to "Sell", 
-                                        new_book_path,
-                                        method: :get %> </div>
-              <div class="column"><%= button_to "Log out",
-                                destroy_user_session_path(@user),
-                                method: :delete %> </div>
-            </div>
-            <div class="columns"><% else %> <div class="column">
-                <p>Sign in to add items to your cart or leave reviews!</p>
-              </div>
-              <div class="column"><%= button_to "Sign in",
-                        new_user_session_path,
-                        method: :get  %> </div><% end %>
+            <% else %>
+                <nav class="breadcrumb" aria-label="breadcrumbs">
+                  <li><p>Sign in to add items to your cart or leave reviews!</p></li>
+                  <li><%= link_to "Sign in",new_user_session_path, method: :get  %></li>
+                </nav>
+            <% end %>
             </div>
           </div>
         </div>

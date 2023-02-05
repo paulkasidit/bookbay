@@ -1,51 +1,56 @@
   <section class = "section">
-    <div class = "columns">
-      <div class = "column is-one-quarter">
         <% if current_user%>
-          <div class = "box">
-            <h3 class = "subtitle">Your Books</h3>
-            <% if @books_by_user.any? %>
-              <ul>
-                <% @books_by_user.each do |book| %>
-                  <li><%= link_to book.title, book_path(book) %></li>
+        <div class = "columns">
+          <div class = "column">
+            <div class = "box">
+              <h2 class = "title is-2">Your Books</h2>
+              <% if @books_by_user.any? %>
+                <ul>
+                  <% @books_by_user.each do |book| %>
+                    <li><%= link_to book.title, book_path(book) %></li>
+                  <% end %>
+                </ul>
+              <%end%>
+            </div>
+            <div class = "column">
+              <div class = "box">
+                <h2 class = "title is-2">Books</h2>
+                <% if @book.any? %>
+                    <% @book.each do |book|%>
+                      <% if book.user_id != current_user.id%>
+                        <li><%= link_to book.title, book_path(book) %></li>
+                      <% end %>
+                    <% end %>
+                <% else %>
+                  <p>There are no books yet.</p>
                 <% end %>
-              </ul>
-            <%end%>
-          <%end%>
+              </div>
+            </div>
+            <div class = "column">
+              <div class = "box">
+                <h2 class = "title is-2"> Your Cart </h2>
+                  <% if @cart.empty? %> <p> You cart is empty!</p><% else %> <div class="box">
+                    <ul><% @cart.each do |book| %> <li><%= book.title %> / $<%= number_with_precision book.price, precision: 2 %> <p><%= button_to  '- remove from cart', remove_from_cart_path(book), method: :delete%> </p>
+                      </li><% end %> </ul>
+                  </div>
+                  <% total_price = []%><%@cart.each do |book| %><% total_price.push(book.price)%><% end %> 
+                  <div class = "box">
+                    <p>Subtotal: $<%= number_with_precision (total_price).sum, precision: 2%>
+                    <p>+ CA Sales Tax: $<%= number_with_precision (total_price).sum * 1.0875 - (total_price).sum, precision: 2%>
+                    <p>Final Total: $<%= number_with_precision (total_price).sum * 1.0875, precision: 2%>
+                    <p><%= button_to  'checkout', checkout_cart_path, method: :post%> </p>
+                  </div>
+                  <p><% end %>   
+              </div>
+            </div>
           </div>
-      </div>
-      <div class = "column">
-        <div class = "box">
-          <h3 class = "subtitle">Books</h3>
-          <% if @book.any? %>
-              <% @book.each do |book|%>
-                <% if book.user_id != current_user.id%>
-                  <li><%= link_to book.title, book_path(book) %></li>
-                <% end %>
+         </div>
+         <% else %>
+            <div class = "box">
+              <% @book.each do|book|%>
+                <li><%= link_to book.title, book_path(book) %></li> 
               <% end %>
-          <% else %>
-            <p>There are no books yet.</p>
-          <% end %>
-        </div>
-      </div>
-      <div class = "column">
-        <div class = "box">
-          <summary> Your Cart </summary>
-          <p>------------------------------------------------------------------</p><% if @cart.empty? %> <p> You cart is empty!</p><% else %> <div class="box">
-            <ul><% @cart.each do |book| %> <li><%= book.title %> / $<%= number_with_precision book.price, precision: 2 %> <p><%= button_to  '- remove from cart', remove_from_cart_path(book), method: :delete%> </p>
-              </li><% end %> </ul>
-          </div>
-          <p>------------------------------------------------------------------</p><% total_price = []%><%@cart.each do |book| %><% total_price.push(book.price)%><% end %> <p>Subtotal: $<%= number_with_precision (total_price).sum, precision: 2%>
-          <p>
-          <p>-----------</p>
-          <p>+ CA Sales Tax: $<%= number_with_precision (total_price).sum * 1.0875 - (total_price).sum, precision: 2%>
-          <p>
-          <p>-----------</p>
-          <p>Final Total: $<%= number_with_precision (total_price).sum * 1.0875, precision: 2%>
-          <p><% end %>
-          <p><%= button_to  'checkout', checkout_cart_path, method: :post%> </p>
-          <p>------------------------------------------------------------------</p>
-        </div>
-      </div>
-    </div>
+            </div>
+          <%end%>
+
 </section>
