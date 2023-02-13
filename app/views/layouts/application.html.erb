@@ -15,7 +15,7 @@
             <div class = "column">
               <nav class="breadcrumb" aria-label="breadcrumbs">
                 <ul>
-                  <li><p>Welcome, <%= current_user.username %> !</p></li>
+                  <li><p>Welcome, <%= current_user.email %> !</p></li>
                   <li><p>Wallet Balance: $<%= number_with_precision current_user.wallet_balance, precision: 2  %></p></li>
                   <li><%= link_to "Sell",new_book_path, method: :get %> 
                   </li>
@@ -25,8 +25,9 @@
             </div>
             <% else %>
                 <nav class="breadcrumb" aria-label="breadcrumbs">
-                  <li><p>Sign in to add items to your cart or leave reviews!</p></li>
+                  <li><p>Sign in/Sign up to add items to your cart or leave reviews!</p></li>
                   <li><%= link_to "Sign in",new_user_session_path, method: :get  %></li>
+                  <%= link_to "Sign up", new_user_registration_path, method: :get  %></li>
                 </nav>
             <% end %>
             </div>

@@ -1,6 +1,6 @@
 <% if current_user %> 
 
-  <h1> Thanks for shopping at BookBay,<% current_user.username %>  
+  <h1> Thanks for shopping at BookBay,<% current_user.email %>  
 
   <h3> Your order summary <h3> 
 
@@ -20,7 +20,7 @@
   <p>-----------</p>
   <p>Final Total: $<%= number_with_precision (total_price).sum * 1.0875, precision: 2%><p>
 
-  <p>$<%= number_with_precision (total_price).sum * 1.0875, precision: 2%> was charged to your card.</p>
+  <p>$<%= number_with_precision (total_price).sum * 1.0875, precision: 2%> was charged to your account.</p>
 
 <% else %> 
   <p>How did you get here? You did not buy anything yet!</p>
