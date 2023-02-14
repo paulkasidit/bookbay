@@ -18,6 +18,7 @@ Ruby on Rails TeamWeek Project. Platform for users to buy and sell books.
 
 ## Setup/Installation Requirements
 
+Live demo - bit.ly/3E5Sc9J
 1. Clone the repo to your desired local directory with the below terminal command (you must already have git installed). Open a terminal in your preferred directory and run this command. 
 ```
 $git clone https://github.com/paulkasidit/bookbay
