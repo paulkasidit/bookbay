@@ -49,6 +49,7 @@
       </div>
       <% else %>
         <div class = "box">
+          <h2 class = "title is-2">Books</h2>
           <% @book.each do|book|%>
             <li><%= link_to book.title, book_path(book) %></li> 
         <% end %>
